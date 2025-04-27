@@ -1,0 +1,12 @@
+{
+  "name": "clone-tabnews",
+  "version": "1.0.0",
+  "description": "Projeto criado durante o curso https://curso.dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
