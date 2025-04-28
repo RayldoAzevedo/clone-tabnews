@@ -4,7 +4,7 @@
   "description": "Projeto criado durante o curso https://curso.dev",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "joao": "next dev"
   },
   "keywords": [],
   "author": "",
