@@ -72,7 +72,16 @@ function Home(){
             }
             }>Fatorial</button> <br/>
 
-            {/*botão média*/}          
+            {/*botão média*/}
+            <button onClick={() => {
+                const a = parseFloat(document.getElementById('a').value)
+                const b = parseFloat(document.getElementById('b').value)
+                const resultado = media(a, b)
+                alert(`A média de ${a} e ${b} = ${resultado}`)
+            }
+            }>Média</button> <br/>
+
+            {/*botão média ponderada*/}        
 
         </div>
     )
