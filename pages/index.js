@@ -79,9 +79,7 @@ function Home(){
                 const resultado = media(a, b)
                 alert(`A média de ${a} e ${b} = ${resultado}`)
             }
-            }>Média</button> <br/>
-
-            {/*botão média ponderada*/}        
+            }>Média</button> <br/>     
 
         </div>
     )
