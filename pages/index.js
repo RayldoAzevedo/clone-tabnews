@@ -1,10 +1,10 @@
-import {soma, subtracao, multiplicacao, divisao, potencia, raiz, fatorial, media} from '../src/operacoes.js'
+import {soma, subtracao, multiplicacao, divisao, potencia, raiz, fatorial, media} from '../src/operacoes.js'         
 
 function Home(){
 
     return(
         <div>
-            <h2>Calculadora</h2>
+            <h2>Mudança de titulo</h2>
 
             <p>informe os dois valoes "A" e "B"</p>
             <input type="number" id="a" placeholder="Valor A"/>
