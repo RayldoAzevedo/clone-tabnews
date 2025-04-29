@@ -1,4 +1,4 @@
-// This is a Next.js page component that renders a simple message for a loved one.
+
 function Home() {
   return (
     <div>
@@ -8,9 +8,4 @@ function Home() {
       <p> Olá, meu bem estou com saudades</p>
     </div>
   );
-}
 
-function teste() {
-  console.log("identação");
-}
-export default Home;
