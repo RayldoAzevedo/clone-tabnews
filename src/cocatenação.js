@@ -1,5 +1,5 @@
-function cocatenação(a, b){
-    return a + b
+function cocatenação(a, b) {
+  return a + b;
 }
 
-export {cocatenação}
+export { cocatenação };
