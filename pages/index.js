@@ -1,90 +1,108 @@
-import {soma, subtracao, multiplicacao, divisao, potencia, raiz, fatorial, media} from '../src/operacoes.js'         
+// pages/index.js
+import { useEffect, useState } from 'react';
+import { Card, CardContent, Typography, TextField, Button, Grid } from '@mui/material';
 
-function Home(){
+export default function Home() {
+  const [horarios, setHorarios] = useState([]);
+  const [dataAtual, setDataAtual] = useState(new Date());
+  const [agendamentos, setAgendamentos] = useState({});
+  const [timeA, setTimeA] = useState('');
+  const [timeB, setTimeB] = useState('');
 
-    return(
-        <div>
-            <h2>Mudança de titulo</h2>
+  const feriados = ['2024-12-25', '2025-01-01'];
 
-            <p>informe os dois valoes "A" e "B"</p>
-            <input type="number" id="a" placeholder="Valor A"/>
-            <input type="number" id="b" placeholder="Valor B"/> 
-            <br/>  <br/>
+  function isFeriadoHoje() {
+    const hoje = new Date().toISOString().split('T')[0];
+    return feriados.includes(hoje);
+  }
 
-            {/*botão soma*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const b = parseFloat(document.getElementById('b').value)
-                const resultado = soma(a, b)
-                alert(`A soma de ${a} + ${b} = ${resultado}`)
-            }
-            }>Soma</button> <br/>
+  function gerarHorarios() {
+    const hoje = new Date();
+    const diaSemana = hoje.getDay();
+    const feriado = isFeriadoHoje();
+    let horaInicio = (feriado || diaSemana === 0 || diaSemana === 6) ? 14 : 17;
+    const horaFim = 23;
+    const lista = [];
+    for (let hora = horaInicio; hora <= horaFim; hora++) {
+      lista.push(`${hora}:00`);
+    }
+    setHorarios(lista);
+  }
 
-            {/*botão subtração*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const b = parseFloat(document.getElementById('b').value)
-                const resultado = subtracao(a, b)
-                alert(`A subtração de ${a} - ${b} = ${resultado}`)
-            }
-            }>Subtração</button> <br/>
+  function agendarHorario(horario) {
+    if (timeA && timeB && !agendamentos[horario]) {
+      setAgendamentos({ ...agendamentos, [horario]: { timeA, timeB } });
+      setTimeA('');
+      setTimeB('');
+    }
+  }
 
-            {/*botão multiplicação*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const b = parseFloat(document.getElementById('b').value)
-                const resultado = multiplicacao(a, b)
-                alert(`A multiplicação de ${a} * ${b} = ${resultado}`)
-            }
-            }>Multiplicação</button> <br/>
+  useEffect(() => {
+    gerarHorarios();
+  }, []);
 
-            {/*botão divisão*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const b = parseFloat(document.getElementById('b').value)
-                const resultado = divisao(a, b)
-                alert(`A divisão de ${a} / ${b} = ${resultado}`)
-            }
-            }>Divisão</button> <br/>
+  return (
+    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
+      <Typography variant="h4" gutterBottom>
+        ⚽ Agendamento de Campo
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        {dataAtual.toLocaleDateString('pt-BR')}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Preencha os nomes dos times e selecione um horário disponível:
+      </Typography>
 
-            {/*botão potencia*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const b = parseFloat(document.getElementById('b').value)
-                const resultado = potencia(a, b)
-                alert(`A potencia de ${a} ** ${b} = ${resultado}`)
-            }
-            }>Potência</button> <br/>
+      <Grid container spacing={2} marginBottom={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <TextField
+            fullWidth
+            label="Time A"
+            value={timeA}
+            onChange={(e) => setTimeA(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TextField
+            fullWidth
+            label="Time B"
+            value={timeB}
+            onChange={(e) => setTimeB(e.target.value)}
+          />
+        </Grid>
+      </Grid>
 
-            {/*botão raiz*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const resultado = raiz(a)
-                alert(`A raiz de ${a} = ${resultado}`)
-            }
-            }>Raiz</button> <br/>
-
-            {/*botão fatorial*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const resultado = fatorial(a)
-                alert(`O fatorial de ${a} = ${resultado}`)
-            }
-            }>Fatorial</button> <br/>
-
-            {/*botão média*/}
-            <button onClick={() => {
-                const a = parseFloat(document.getElementById('a').value)
-                const b = parseFloat(document.getElementById('b').value)
-                const resultado = media(a, b)
-                alert(`A média de ${a} e ${b} = ${resultado}`)
-            }
-            }>Média</button> <br/>     
-
-        </div>
-    )
-
+      <Grid container spacing={2}>
+        {horarios.map((hora) => (
+          <Grid item xs={12} sm={6} md={4} key={hora}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6">Horário: {hora}</Typography>
+                {agendamentos[hora] ? (
+                  <>
+                    <Typography variant="body1">Time A: {agendamentos[hora].timeA}</Typography>
+                    <Typography variant="body1">Time B: {agendamentos[hora].timeB}</Typography>
+                    <Typography variant="body2" color="textSecondary">Agendado ✅</Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="body2" color="textSecondary">Disponível</Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => agendarHorario(hora)}
+                      disabled={!timeA || !timeB}
+                      sx={{ marginTop: 1 }}
+                    >
+                      Agendar
+                    </Button>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
 }
-
-
-export default Home

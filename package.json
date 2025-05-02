@@ -4,12 +4,16 @@
   "description": "Projeto criado durante o curso https://curso.dev",
   "main": "index.js",
   "scripts": {
-    "joao": "next dev"
+    "dev": "next dev"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
